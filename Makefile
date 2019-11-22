@@ -6,7 +6,7 @@
 #    By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/22 11:56:06 by sdunckel          #+#    #+#              #
-#    Updated: 2019/11/22 14:36:05 by sdunckel         ###   ########.fr        #
+#    Updated: 2019/11/22 18:18:19 by sdunckel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,8 @@ NAME		= libasm.a
 
 SRCS		= \
 				ft_write.s \
+				ft_read.s \
+				ft_strlen.s \
 				test.s
 
 
@@ -45,5 +47,7 @@ fclean:		clean
 			@${RM} ${NAME} test
 
 re:			fclean all
+
+retest:		fclean test
 
 .PHONY: 	all fclean clean re
