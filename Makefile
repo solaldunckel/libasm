@@ -6,7 +6,7 @@
 #    By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/22 11:56:06 by sdunckel          #+#    #+#              #
-#    Updated: 2019/11/22 18:18:19 by sdunckel         ###   ########.fr        #
+#    Updated: 2019/11/26 12:26:57 by sdunckel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,8 @@ SRCS		= \
 				ft_write.s \
 				ft_read.s \
 				ft_strlen.s \
-				test.s
-
+				ft_strcmp.s \
+				ft_strcpy.s
 
 OBJS		= ${SRCS:.s=.o}
 
@@ -33,12 +33,12 @@ $(NAME):	${OBJS}
 			@ar -rcs ${NAME} ${OBJS}
 
 %.o: %.s
-			$(NA) $(NA_FLAGS) -o $@ $<
+			@$(NA) $(NA_FLAGS) -o $@ $<
 
 all:		${NAME}
 
 test:		$(NAME)
-			$(CC) $(CFLAGS) $(NAME) main.c -o test
+			@$(CC) $(CFLAGS) $(NAME) main.c -o test
 
 clean:
 			@${RM} ${OBJS}

@@ -6,7 +6,7 @@
 /*   By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 11:59:40 by sdunckel          #+#    #+#             */
-/*   Updated: 2019/11/22 18:21:55 by sdunckel         ###   ########.fr       */
+/*   Updated: 2019/11/26 13:44:13 by sdunckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,49 +16,152 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-void 	start(void);
-void 	ft_write(unsigned int fd, const char *buf, size_t count);
-int		ft_read(unsigned int fd, const char *buf, size_t count);
-size_t	ft_strlen(const char *s);
+# define RESET   "\033[0m"
+# define RED     "\033[31m"
+# define GREEN   "\033[32m"
+# define BUFFER_SIZE 512
+
+ssize_t 	ft_write(unsigned int fd, const char *buf, size_t count);
+ssize_t		ft_read(unsigned int fd, const char *buf, size_t count);
+size_t		ft_strlen(const char *s);
+int 		ft_strcmp(const char *s1, const char *s2);
+char 		*ft_strcpy(char *dest, const char *src);
+
+int		write_test(char *str)
+{
+	int		ft_write_pipe[2];
+	char	buf[BUFFER_SIZE];
+	int		ret;
+
+	bzero(buf, BUFFER_SIZE);
+	if (pipe(ft_write_pipe) < 0)
+		exit(EXIT_FAILURE);
+	fcntl(ft_write_pipe[0], F_SETFL, O_NONBLOCK);
+	write(ft_write_pipe[1], str, strlen(str));
+	ret = read(ft_write_pipe[0], buf, BUFFER_SIZE);
+	buf[ret] = '\0';
+
+	if (!strcmp(buf, str))
+		printf("" GREEN "[OK] " RESET "");
+	else
+		printf("" RED "[KO] " RESET "");
+	close(ft_write_pipe[1]);
+	close(ft_write_pipe[0]);
+	return (1);
+}
+
+int		strlen_test(char *str)
+{
+	if (strlen(str) == ft_strlen(str))
+		printf("" GREEN "[OK] " RESET "");
+	else
+		printf("" RED "[KO] " RESET "");
+	return (1);
+}
+
+int		strcmp_test(char *s1, char *s2)
+{
+	if (strcmp(s1, s2) == ft_strcmp(s1, s2))
+		printf("" GREEN "[OK] " RESET "");
+	else
+		printf("" RED "[KO] " RESET "");
+	return (1);
+}
+
+int		strcpy_test(char *src)
+{
+	char	dest1[BUFFER_SIZE];
+	char	dest2[BUFFER_SIZE];
+
+	bzero(dest1, BUFFER_SIZE);
+	bzero(dest2, BUFFER_SIZE);
+	strcpy(dest1, src);
+	ft_strcpy(dest2, src);
+	if (!strcmp(dest1, dest2))
+		printf("" GREEN "[OK] " RESET "");
+	else
+		printf("" RED "[KO] " RESET "");
+	return (1);
+}
+
+int		read_test(char *str)
+{
+	int		ft_read_pipe[2];
+	char	buf[BUFFER_SIZE];
+	int		ret;
+
+	bzero(buf, BUFFER_SIZE);
+	if (pipe(ft_read_pipe) < 0)
+		exit(EXIT_FAILURE);
+	fcntl(ft_read_pipe[0], F_SETFL, O_NONBLOCK);
+	write(ft_read_pipe[1], str, strlen(str));
+	ret = ft_read(ft_read_pipe[0], buf, BUFFER_SIZE);
+	buf[ret] = '\0';
+
+	if (!strcmp(buf, str))
+		printf("" GREEN "[OK] " RESET "");
+	else
+		printf("" RED "[KO] " RESET "");
+	close(ft_read_pipe[1]);
+	close(ft_read_pipe[0]);
+	return (1);
+}
+
 int		main(void)
 {
-	int		fd;
-	int		ret;
-	char	buf[256];
+	printf("\n****** LIBASM ******\n\n");
 
 	/*
-	FT_WRITE
+	** FT_STRLEN
 	*/
-	write(1, "test\n", 4);
-	ft_write(1, "test\n", 4);
-	write(1, "n", 1);
-	ft_write(1, "n", 1);
-	ft_write(1, "\n", 1);
+	printf("%-12s :  ", "ft_strlen.s");
+	strlen_test("allo");
+	strlen_test("");
+	strlen_test("on test tout ce qu'on peut mon gars");
+	strlen_test("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tellus metus, finibus quis sagittis quis, volutpat a justo. Nunc et pellentesque quam. Fusce aliquam aliquam libero, sed pulvinar nullam.");
+	strlen_test("        ");
+	printf("\n\n");
 
 	/*
-	FT_READ
+	** FT_STRCPY
 	*/
-	fd = open("main.c", O_RDONLY);
-	ret = read(fd, buf, 256);
-	buf[ret] = '\0';
-	printf("%s\n", buf);
-	close(fd);
-
-	fd = open("main.c", O_RDONLY);
-	ret = ft_read(fd, buf, 256);
-	buf[ret] = '\0';
-	printf("%s\n", buf);
-	close(fd);
+	printf("%-12s :  ", "ft_strcpy.s");
+	strcpy_test("abc");
+	strcpy_test("allo mon gars");
+	strcpy_test("ca fou koi allo");
+	printf("\n\n");
 
 	/*
-	FT_STRLEN
+	** FT_STRCMP
+	*/
+	printf("%-12s :  ", "ft_strcmp.s");
+	strcmp_test("allo", "allo");
+	strcmp_test("abcdef", "zcdef");
+	strcmp_test("", "wtf");
+	strcmp_test("on test tout ce qu'on peut mon gars", "   ");
+	strcmp_test("", "");
+	strcmp_test("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tellus metus, finibus quis sagittis quis, volutpat a justo. Nunc et pellentesque quam. Fusce aliquam aliquam libero, sed pulvinar nullam.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tellus metus, finibus quis sagittis quis, volutpat a justo. Nunc et pellentesque quam. Fusce aliquam aliquam libero, sed pulvinar nullam.");
+	printf("\n\n");
+
+	/*
+	** FT_WRITE
+	*/
+	printf("%-12s :  ", "ft_write.s");
+	write_test("");
+	write_test("test");
+	write_test("test allo");
+	write_test("test allo \0 what");
+	printf("\n\n");
+
+	/*
+	** FT_READ
 	*/
 
-	printf("%lu\n", strlen(""));
-	printf("%lu\n", ft_strlen(""));
-
-
-
-
-	//start();
+	printf("%-12s :  ", "ft_read.s");
+	read_test("");
+	read_test("allo");
+	read_test("allo mon gars");
+	read_test("allo \0 mon bars");
+	read_test("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tellus metus, finibus quis sagittis quis, volutpat a justo. Nunc et pellentesque quam. Fusce aliquam aliquam libero, sed pulvinar nullam.");
+	printf("\n\n");
 }

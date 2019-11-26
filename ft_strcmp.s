@@ -1,11 +1,22 @@
-section .text
-	global _ft_strcmp
+global _ft_strcmp
 
 _ft_strcmp:
-	mov		r10, rsi		; store arg1 in r10
-	cmp		rdi, r10		; look for \0
-	repne scasb				; search byte in al in rdi / increment rdi after each cmp
-	sub		rdi, rsi		; save the string length
-	dec		rdi				; decrement rdi
-	mov		rax, rdi		; save rdi in rax for return
-	ret						; return
+
+loop:
+	mov		r10b, [rdi]		; store arg1 in r10
+	mov		r11b, [rsi]		; store arg1 in r10
+	cmp		r11b, r10b
+	jne		diff
+	cmp 	r10b, 0
+	je		diff
+	cmp 	r11b, 0
+	je		diff
+	add		rdi, 1
+	add		rsi, 1
+	jmp		loop
+
+diff:
+	movzx rax, r10b
+	movzx rbx, r11b
+	sub rax, rbx
+	ret
