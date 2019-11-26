@@ -6,7 +6,7 @@
 #    By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/22 11:56:06 by sdunckel          #+#    #+#              #
-#    Updated: 2019/11/26 12:26:57 by sdunckel         ###   ########.fr        #
+#    Updated: 2019/11/26 17:33:47 by sdunckel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,15 @@ SRCS		= \
 				ft_read.s \
 				ft_strlen.s \
 				ft_strcmp.s \
+				ft_strdup.s \
 				ft_strcpy.s
 
+SRCS_BONUS		= \
+				ft_list_size_bonus.s \
+				ft_list_push_front_bonus.s
+
 OBJS		= ${SRCS:.s=.o}
+OBJS_BONUS	= ${SRCS_BONUS:.s=.o}
 
 NA			= nasm
 NA_FLAGS	= -f macho64
@@ -37,17 +43,25 @@ $(NAME):	${OBJS}
 
 all:		${NAME}
 
-test:		$(NAME)
+bonus:		$(OBJS_BONUS)
+			@ar -rcs ${NAME} ${OBJS} ${OBJS_BONUS}
+
+test:		all
 			@$(CC) $(CFLAGS) $(NAME) main.c -o test
+			@./test
+
+bonustest:	bonus
+			@$(CC) $(CFLAGS) $(NAME) main_bonus.c -o test_bonus
+			@./test_bonus
 
 clean:
 			@${RM} ${OBJS}
+			@${RM} ${OBJS_BONUS}
 
 fclean:		clean
 			@${RM} ${NAME} test
+			@${RM} ${NAME} test_bonus
 
 re:			fclean all
-
-retest:		fclean test
 
 .PHONY: 	all fclean clean re
