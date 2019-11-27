@@ -6,7 +6,7 @@
 /*   By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 11:59:40 by sdunckel          #+#    #+#             */
-/*   Updated: 2019/11/26 17:34:11 by sdunckel         ###   ########.fr       */
+/*   Updated: 2019/11/27 00:07:09 by sdunckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,8 @@ typedef struct	s_list
 	struct s_list 	*next;
 } 				t_list;
 
-ssize_t 	ft_write(int fd, const void *buf, size_t count);
-ssize_t		ft_read(int fd, const char *buf, size_t count);
-size_t		ft_strlen(const char *s);
-int 		ft_strcmp(const char *s1, const char *s2);
-char 		*ft_strcpy(char *dst, const char *src);
-char 		*ft_strdup(const char *s1);
 int			ft_list_size(t_list *begin_list);
+void		ft_list_push_front(t_list **begin, void *data);
 
 int		list_size(t_list *lst)
 {
@@ -92,6 +87,25 @@ int		list_size_test(int lst_num)
 	return (1);
 }
 
+int		list_push_front_test(void *new)
+{
+	t_list	*list;
+
+	list = NULL;
+	list_add_back(&list, list_new("wtf"));
+	ft_list_push_front(&list, new);
+	if (!new && !list->data)
+	{
+		printf("" GREEN "[OK] " RESET "");
+		return (0);
+	}
+	if (!strcmp(list->data, (char*)new))
+		printf("" GREEN "[OK] " RESET "");
+	else
+		printf("" RED "[KO] " RESET "");
+	return (1);
+}
+
 int		main(void)
 {
 	/*
@@ -102,11 +116,17 @@ int		main(void)
 	list_size_test(8);
 	list_size_test(1);
 	list_size_test(16);
+	printf("\n\n");
 
 	/*
 	** FT_PUSH_FRONT
 	*/
+	t_list	*list;
+
+	list = NULL;
 	printf("%-16s :  ", "ft_push_front.s");
+	list_push_front_test("aie");
+	list_push_front_test(NULL);
 	printf("\n");
 
 
