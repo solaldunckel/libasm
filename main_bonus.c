@@ -6,7 +6,7 @@
 /*   By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 11:59:40 by sdunckel          #+#    #+#             */
-/*   Updated: 2019/11/27 00:07:09 by sdunckel         ###   ########.fr       */
+/*   Updated: 2019/12/10 13:17:19 by sdunckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct	s_list
 
 int			ft_list_size(t_list *begin_list);
 void		ft_list_push_front(t_list **begin, void *data);
+void		ft_list_sort(t_list **begin_list, int (*cmp)());
 
 int		list_size(t_list *lst)
 {
@@ -106,6 +107,12 @@ int		list_push_front_test(void *new)
 	return (1);
 }
 
+int 	test(char *s1, char *s2)
+{
+	printf("%s %s\n", s1, s2);
+	return (1);
+}
+
 int		main(void)
 {
 	/*
@@ -127,7 +134,24 @@ int		main(void)
 	printf("%-16s :  ", "ft_push_front.s");
 	list_push_front_test("aie");
 	list_push_front_test(NULL);
+
+	t_list	*list_s;
+
+	list_s = NULL;
+	list_add_back(&list_s, list_new("test"));
+	list_add_back(&list_s, list_new("allo"));
+	list_add_back(&list_s, list_new("what"));
+	list_add_back(&list_s, list_new("ok"));
+	list_add_back(&list_s, list_new("abed"));
+	ft_list_sort(&list_s, strcmp);
+
+	t_list	*tmp;
+
+	tmp = list_s;
 	printf("\n");
-
-
+	while (tmp)
+	{
+		printf("%s\n", tmp->data);
+		tmp = tmp->next;
+	}
 }

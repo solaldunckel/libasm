@@ -6,7 +6,7 @@
 #    By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/22 11:56:06 by sdunckel          #+#    #+#              #
-#    Updated: 2019/11/26 17:33:47 by sdunckel         ###   ########.fr        #
+#    Updated: 2019/12/10 09:40:47 by sdunckel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ SRCS		= \
 
 SRCS_BONUS		= \
 				ft_list_size_bonus.s \
-				ft_list_push_front_bonus.s
+				ft_list_push_front_bonus.s \
+				ft_list_sort_bonus.s
 
 OBJS		= ${SRCS:.s=.o}
 OBJS_BONUS	= ${SRCS_BONUS:.s=.o}
@@ -43,7 +44,7 @@ $(NAME):	${OBJS}
 
 all:		${NAME}
 
-bonus:		$(OBJS_BONUS)
+bonus:		$(OBJS_BONUS) $(NAME)
 			@ar -rcs ${NAME} ${OBJS} ${OBJS_BONUS}
 
 test:		all
