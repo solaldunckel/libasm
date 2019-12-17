@@ -6,7 +6,7 @@
 ;    By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+         ;
 ;                                                 +#+#+#+#+#+   +#+            ;
 ;    Created: 2019/12/13 07:43:18 by sdunckel          #+#    #+#              ;
-;    Updated: 2019/12/17 17:02:29 by sdunckel         ###   ########.fr        ;
+;    Updated: 2019/12/17 17:28:16 by sdunckel         ###   ########.fr        ;
 ;                                                                              ;
 ; **************************************************************************** ;
 
@@ -21,24 +21,59 @@ _ft_list_remove_if:
 	push	r13
 	push	r14
 	push	r15
-	push	rdi
 
-	mov		r12, [rdi]
-	mov		r13, rsi
-loop_before:
+	mov		r12, rdi
 	cmp		r12, 0
 	je		end
-	mov		rdi, [r12]
+	mov		r13, rsi
+	cmp		r13, 0
+	je		end
+	mov		r14, rdx
+	cmp		r14, 0
+	je		end
+	mov		r15, rcx
+	cmp		r15, 0
+	je		end
+
+	mov		r11, [r12]
+loop_before:
+	cmp		r11, 0
+	je		inter
+	mov		rdi, [r11]
 	mov		rsi, r13
-	call	rdx
+	call	r14
 	cmp		rax, 0
 	je		remove_before
-	jmp		end
+	jmp		inter
 remove_before:
-	mov		[r12], [r15 + 8]
+	mov		r11, [r11 + 8]
+	mov		[r12], r11
 	jmp		loop_before
+
+inter:
+	cmp		r11, 0
+	je		end
+	mov		r11, [r12]
+
+loop_after:
+	cmp		r11, 0
+	je		end
+	mov		r10, [r11 + 8]
+	cmp		r10, 0
+	je		end
+	mov		rdi, [r10]
+	mov		rsi, r13
+	call	r14
+	cmp		rax, 0
+	je		remove_after
+	mov		r11, r10
+	jmp		loop_after
+remove_after:
+	mov		r10, [r10 + 8]
+	mov		[r11 + 8], r10
+	jmp		loop_after
+
 end:
-	pop		rdi
 	pop		r15
 	pop		r14
 	pop		r13

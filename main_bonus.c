@@ -6,7 +6,7 @@
 /*   By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 11:59:40 by sdunckel          #+#    #+#             */
-/*   Updated: 2019/12/17 16:43:56 by sdunckel         ###   ########.fr       */
+/*   Updated: 2019/12/17 17:28:00 by sdunckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,10 +345,11 @@ int		main(void)
 	list_add_back(&list, list_new(strdup("0")));
 	list_add_back(&list, list_new(strdup("0")));
 	list_add_back(&list, list_new(strdup("5")));
-	list_add_back(&list, list_new(strdup("5")));
 	list_add_back(&list, list_new(strdup("2")));
-	list_add_back(&list, list_new(strdup("54")));
+	list_add_back(&list, list_new(strdup("0")));
 	list_add_back(&list, list_new(strdup("5")));
+	list_add_back(&list, list_new(strdup("54")));
+	list_add_back(&list, list_new(strdup("0")));
 	/*
 	** FT_LIST_REMOVE_IF
 	*/
@@ -356,7 +357,7 @@ int		main(void)
 	printf("before:\n");
 	//print_list(list);
 	printf("\n");
-	ft_list_remove_if(&list, "0", strcmp, testfree);
+	ft_list_remove_if(&list, "5", strcmp, testfree);
 	//ft_list_remove_if2(&list, "0", &strcmp);
 	printf("after:\n");
 	print_list(list);
