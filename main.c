@@ -6,7 +6,7 @@
 /*   By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 11:59:40 by sdunckel          #+#    #+#             */
-/*   Updated: 2019/11/26 16:11:34 by sdunckel         ###   ########.fr       */
+/*   Updated: 2019/12/16 21:13:10 by sdunckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,13 @@ char 		*ft_strdup(const char *s1);
 
 int		strlen_test(char *str)
 {
-	if (strlen(str) == ft_strlen(str))
+	int 	ret1;
+	int 	ret2;
+
+	ret1 = ft_strlen(str);
+	ret2 = strlen(str);
+	//printf("strlen : %d / ft_strlen : %d\n", ret1, ret2);
+	if (ret1 == ret2)
 		printf("" GREEN "[OK] " RESET "");
 	else
 		printf("" RED "[KO] " RESET "");
@@ -44,8 +50,8 @@ int		strcpy_test(char *src)
 
 	bzero(dest1, BUFFER_SIZE);
 	bzero(dest2, BUFFER_SIZE);
-	strcpy(dest1, src);
-	ft_strcpy(dest2, src);
+	ft_strcpy(dest1, src);
+	strcpy(dest2, src);
 	if (!strcmp(dest1, dest2))
 		printf("" GREEN "[OK] " RESET "");
 	else
@@ -55,7 +61,13 @@ int		strcpy_test(char *src)
 
 int		strcmp_test(char *s1, char *s2)
 {
-	if (strcmp(s1, s2) == ft_strcmp(s1, s2))
+	int 	ret1;
+	int 	ret2;
+
+	ret1 = ft_strcmp(s1, s2);
+	ret2 = strcmp(s1, s2);
+	//printf("strcmp : %d / ft_strcmp : %d\n", ret1, ret2);
+	if ((ret1 > 0 && ret2 > 0) || (ret1 < 0 && ret2 < 0) || (ret1 == 0 && ret2 == 0))
 		printf("" GREEN "[OK] " RESET "");
 	else
 		printf("" RED "[KO] " RESET "");
@@ -113,8 +125,8 @@ int		strdup_test(char *str)
 	char	*str1;
 	char	*str2;
 
-	str1 = strdup(str);
-	str2 = ft_strdup(str);
+	str1 = ft_strdup(str);
+	str2 = strdup(str);
 	if (!strcmp(str1, str2))
 		printf("" GREEN "[OK] " RESET "");
 	else
@@ -148,7 +160,7 @@ int		main(void)
 	strcpy_test("allo \0 mon gars");
 	strcpy_test("ca fou koi allo");
 	strcpy_test("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tellus metus, finibus quis sagittis quis, volutpat a justo. Nunc et pellentesque quam. Fusce aliquam aliquam libero, sed pulvinar nullam.");
-	strlen_test("        ");
+	strcpy_test("        ");
 	printf("\n\n");
 
 	/*
@@ -160,6 +172,12 @@ int		main(void)
 	strcmp_test("", "wtf");
 	strcmp_test("on test tout ce qu'on peut mon gars", "   ");
 	strcmp_test("", "");
+	strcmp_test("beta", "");
+//	strcmp_test("\xfe", "\xfe\xff");
+	strcmp_test("\0", "\0");
+	strcmp_test("\xff", "\xff\xff");
+	strcmp_test("\xff", "\xff\xfe");
+	strcmp_test("\xfe", "\xfe\xff");
 	strcmp_test("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tellus metus, finibus quis sagittis quis, volutpat a justo. Nunc et pellentesque quam. Fusce aliquam aliquam libero, ed pulvinar nullam.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tellus metus, finibus quis sagittis quis, volutpat a justo. Nunc et pellentesque quam. Fusce aliquam aliquam libero, sed pulvinar nullam.");
 	printf("\n\n");
 
@@ -178,10 +196,10 @@ int		main(void)
 	*/
 
 	printf("%-12s :  ", "ft_read.s");
-	read_test("");
 	read_test("allo");
 	read_test("allo mon gars");
 	read_test("allo \0 mon bars");
+	read_test("");
 	read_test("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tellus metus, finibus quis sagittis quis, volutpat a justo. Nunc et pellentesque quam. Fusce aliquam aliquam libero, sed pulvinar nullam.");
 	printf("\n\n");
 
@@ -189,9 +207,9 @@ int		main(void)
 	** FT_STRDUP
 	*/
 	printf("%-12s :  ", "ft_strdup.s");
-	strdup_test("");
 	strdup_test("allo");
 	strdup_test("allo wtf");
+	strdup_test("");
 	strdup_test("allo \0 mon bars");
 	strdup_test("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tellus metus, finibus quis sagittis quis, volutpat a justo. Nunc et pellentesque quam. Fusce aliquam aliquam libero, sed pulvinar nullam.");
 	printf("\n");

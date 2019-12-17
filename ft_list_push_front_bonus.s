@@ -1,17 +1,32 @@
-extern _malloc
-global _ft_list_push_front
+; **************************************************************************** ;
+;                                                                              ;
+;                                                         :::      ::::::::    ;
+;    ft_list_push_front_bonus.s                         :+:      :+:    :+:    ;
+;                                                     +:+ +:+         +:+      ;
+;    By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+         ;
+;                                                 +#+#+#+#+#+   +#+            ;
+;    Created: 2019/12/13 05:23:57 by sdunckel          #+#    #+#              ;
+;    Updated: 2019/12/17 10:25:46 by sdunckel         ###   ########.fr        ;
+;                                                                              ;
+; **************************************************************************** ;
+
+section .text
+	extern _malloc
+	global _ft_list_push_front
 
 ; void	ft_list_push_front(t_list **begin, void *new);
 _ft_list_push_front:
-	mov		r10, rdi ; save rdi (arg1)
-	mov		r11, rsi ; save rsi (arg2)
-	mov		rdi, 16 ; put len to malloc in rdi (arg1)
+	push	rdi				; save begin
+	push	rsi				; save data
+	mov		rdi, 16			; put len to malloc in rdi (arg1) sizeof(t_list)
 	call	_malloc
-	cmp		rax, 0 ; malloc fail
+	pop		rsi
+	pop		rdi
+	cmp		rax, 0			; malloc fail
  	je		end
-	mov 	[rax], r11 ; move rsi (arg2) in arg1 = new->data = *new
-	mov		rcx, [r10] ; *begin in rcx
-	mov		[rax + 8], rcx ; move *begin in new->next
-	mov		[r10], rax
+	mov 	[rax], rsi		; move rsi (arg2) in arg1 = new->data = *new
+	mov		rcx, [rdi]		; *begin in rcx
+	mov		[rax + 8], rcx	; move *begin in new->next
+	mov		[rdi], rax
 end:
 	ret

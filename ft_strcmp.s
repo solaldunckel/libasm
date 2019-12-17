@@ -1,22 +1,45 @@
-global _ft_strcmp
+; **************************************************************************** ;
+;                                                                              ;
+;                                                         :::      ::::::::    ;
+;    ft_strcmp.s                                        :+:      :+:    :+:    ;
+;                                                     +:+ +:+         +:+      ;
+;    By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+         ;
+;                                                 +#+#+#+#+#+   +#+            ;
+;    Created: 2019/12/13 05:24:03 by sdunckel          #+#    #+#              ;
+;    Updated: 2019/12/17 10:24:25 by sdunckel         ###   ########.fr        ;
+;                                                                              ;
+; **************************************************************************** ;
 
-;int 		ft_strcmp(const char *s1, const char *s2);
+section .text
+	global _ft_strcmp
+
+; int 		ft_strcmp(const char *s1, const char *s2);
 _ft_strcmp:
+	xor		r8, r8
+	xor		rbx, rbx
+	xor		rax, rax
 loop:
-	mov		r10b, [rdi]		; store arg1 in r10
-	mov		r11b, [rsi]		; store arg1 in r10
-	cmp		r11b, r10b
-	jne		diff
-	cmp 	r10b, 0
-	je		diff
-	cmp 	r11b, 0
-	je		diff
-	add		rdi, 1
-	add		rsi, 1
-	jmp		loop
-
-diff:
-	movzx rax, r10b
-	movzx rbx, r11b
-	sub rax, rbx
+	mov 	al, byte[rdi + r8]
+	mov 	bl, byte[rsi + r8]
+	cmp 	al, 0
+	je		end
+	cmp		bl, 0
+	je		end
+	inc		r8
+	cmp		al, bl
+	je		loop
+end:
+	sub		rax, rbx
+	cmp		rax, 0
+	je		equal
+	jg		sup
+	jl		inf
+equal:
+	mov		rax, 0
+	ret
+sup:
+	mov		rax, 1
+	ret
+inf:
+	mov		rax, -1
 	ret

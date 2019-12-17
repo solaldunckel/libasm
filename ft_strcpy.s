@@ -1,17 +1,28 @@
-global _ft_strcpy
+; **************************************************************************** ;
+;                                                                              ;
+;                                                         :::      ::::::::    ;
+;    ft_strcpy.s                                        :+:      :+:    :+:    ;
+;                                                     +:+ +:+         +:+      ;
+;    By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+         ;
+;                                                 +#+#+#+#+#+   +#+            ;
+;    Created: 2019/12/13 05:24:34 by sdunckel          #+#    #+#              ;
+;    Updated: 2019/12/17 10:24:07 by sdunckel         ###   ########.fr        ;
+;                                                                              ;
+; **************************************************************************** ;
+
+section .text
+	global _ft_strcpy
 
 ; char *ft_strcpy(char *dest, const char *src);
 _ft_strcpy:
-	push	rdi
+	mov		rax, rdi
 loop:
-	mov		r10b, byte [rsi]
-	mov		byte [rdi], r10b
-	cmp		byte [rsi], 0
+	mov		bl, [rsi]
+	mov		[rdi], bl
+	cmp		bl, 0
 	je		end
-	add		rdi, 1
-	add		rsi, 1
+	inc		rdi
+	inc		rsi
 	jne		loop
 end:
-	pop		rdi
-	mov		rax, rdi
 	ret
