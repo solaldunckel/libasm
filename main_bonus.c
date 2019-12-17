@@ -6,7 +6,7 @@
 /*   By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 11:59:40 by sdunckel          #+#    #+#             */
-/*   Updated: 2019/12/17 10:20:39 by sdunckel         ###   ########.fr       */
+/*   Updated: 2019/12/17 16:43:56 by sdunckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -342,6 +342,8 @@ int		main(void)
 	print_list(list);
 
 	list = NULL;
+	list_add_back(&list, list_new(strdup("0")));
+	list_add_back(&list, list_new(strdup("0")));
 	list_add_back(&list, list_new(strdup("5")));
 	list_add_back(&list, list_new(strdup("5")));
 	list_add_back(&list, list_new(strdup("2")));
