@@ -6,7 +6,7 @@
 ;    By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+         ;
 ;                                                 +#+#+#+#+#+   +#+            ;
 ;    Created: 2019/12/13 05:24:46 by sdunckel          #+#    #+#              ;
-;    Updated: 2019/12/17 10:23:47 by sdunckel         ###   ########.fr        ;
+;    Updated: 2019/12/20 01:33:17 by sdunckel         ###   ########.fr        ;
 ;                                                                              ;
 ; **************************************************************************** ;
 
@@ -15,7 +15,7 @@ section .text
 
 ; size_t	ft_strlen(const char *s);
 _ft_strlen:
-	xor		rax, rax				; i = 0
+	mov		rax, 0					; i = 0
 loop:
 	cmp 	byte [rdi + rax], 0		; while s[i] != NULL
 	je		end

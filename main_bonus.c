@@ -6,7 +6,7 @@
 /*   By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 11:59:40 by sdunckel          #+#    #+#             */
-/*   Updated: 2019/12/17 18:17:14 by sdunckel         ###   ########.fr       */
+/*   Updated: 2019/12/20 01:32:15 by sdunckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,22 +343,19 @@ int		main(void)
 	print_list(list);
 
 	list = NULL;
-	list_add_back(&list, list_new(strdup("0")));
-	list_add_back(&list, list_new(strdup("0")));
 	list_add_back(&list, list_new(strdup("5")));
+	list_add_back(&list, list_new(strdup("0")));
 	list_add_back(&list, list_new(strdup("2")));
-	list_add_back(&list, list_new(strdup("0")));
 	list_add_back(&list, list_new(strdup("5")));
-	list_add_back(&list, list_new(strdup("5")));
-	list_add_back(&list, list_new(strdup("5")));
-	list_add_back(&list, list_new(strdup("54")));
-	list_add_back(&list, list_new(strdup("0")));
+	list_add_back(&list, list_new(strdup("8")));
+	list_add_back(&list, list_new(strdup("7")));
+	list_add_back(&list, list_new(strdup("4")));
 	/*
 	** FT_LIST_REMOVE_IF
 	*/
 	printf("%-16s :  \n\n", "ft_list_remove_if.s");
 	printf("before:\n");
-	//print_list(list);
+	print_list(list);
 	printf("\n");
 	ft_list_remove_if(&list, "5", strcmp, free);
 	//ft_list_remove_if2(&list, "0", &strcmp);

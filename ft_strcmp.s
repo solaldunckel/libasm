@@ -6,7 +6,7 @@
 ;    By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+         ;
 ;                                                 +#+#+#+#+#+   +#+            ;
 ;    Created: 2019/12/13 05:24:03 by sdunckel          #+#    #+#              ;
-;    Updated: 2019/12/17 10:24:25 by sdunckel         ###   ########.fr        ;
+;    Updated: 2019/12/20 01:36:36 by sdunckel         ###   ########.fr        ;
 ;                                                                              ;
 ; **************************************************************************** ;
 
@@ -15,17 +15,17 @@ section .text
 
 ; int 		ft_strcmp(const char *s1, const char *s2);
 _ft_strcmp:
-	xor		r8, r8
+	xor		r10, r10
 	xor		rbx, rbx
 	xor		rax, rax
 loop:
-	mov 	al, byte[rdi + r8]
-	mov 	bl, byte[rsi + r8]
+	mov 	al, byte[rdi + r10]
+	mov 	bl, byte[rsi + r10]
 	cmp 	al, 0
 	je		end
 	cmp		bl, 0
 	je		end
-	inc		r8
+	inc		r10
 	cmp		al, bl
 	je		loop
 end:

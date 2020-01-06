@@ -6,11 +6,12 @@
 ;    By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+         ;
 ;                                                 +#+#+#+#+#+   +#+            ;
 ;    Created: 2019/12/16 14:47:11 by sdunckel          #+#    #+#              ;
-;    Updated: 2019/12/17 10:25:53 by sdunckel         ###   ########.fr        ;
+;    Updated: 2019/12/18 17:38:24 by sdunckel         ###   ########.fr        ;
 ;                                                                              ;
 ; **************************************************************************** ;
 
 section .text
+	extern _ft_strlen
 	global _ft_atoi_base
 ;	int		ft_atoi_base(char *str, char *base)
 		;	rdi = *str	rsi = *base
@@ -25,7 +26,7 @@ _ft_atoi_base:
 	mov		r10, rdi	; save *str in r10
 	mov		r11, rsi	; save *base in r11
 	mov		rdi, rsi
-	call	ft_strlen
+	call	_ft_strlen
 	mov		r12, rax	; r12 = strlen(base)
 	cmp		r12, 0
 	je		end
@@ -144,13 +145,3 @@ end:
 	pop		r13
 	pop		r12
 	ret
-
-ft_strlen:
-	xor		rax, rax					; i = 0
-ft_strlen_loop:
-	cmp 	byte [rdi + rax], 0		; while s[i] != NULL
-	je		ft_strlen_end
-	inc		rax						; i = i + 1;
-	jmp		ft_strlen_loop
-ft_strlen_end:
-	ret								; return i
