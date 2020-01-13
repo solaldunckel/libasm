@@ -6,7 +6,7 @@
 ;    By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+         ;
 ;                                                 +#+#+#+#+#+   +#+            ;
 ;    Created: 2019/12/13 05:24:34 by sdunckel          #+#    #+#              ;
-;    Updated: 2019/12/17 10:24:07 by sdunckel         ###   ########.fr        ;
+;    Updated: 2020/01/06 12:46:36 by sdunckel         ###   ########.fr        ;
 ;                                                                              ;
 ; **************************************************************************** ;
 
@@ -17,12 +17,12 @@ section .text
 _ft_strcpy:
 	mov		rax, rdi
 loop:
-	mov		bl, [rsi]
-	mov		[rdi], bl
-	cmp		bl, 0
+	mov		bl, [rsi]	; src char in bl
+	mov		[rdi], bl	; bl in dest
+	cmp		bl, 0		; if we copied a /0 we stop
 	je		end
-	inc		rdi
+	inc		rdi 		; inc both
 	inc		rsi
-	jne		loop
+	jmp		loop
 end:
 	ret

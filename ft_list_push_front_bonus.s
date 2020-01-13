@@ -6,7 +6,7 @@
 ;    By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+         ;
 ;                                                 +#+#+#+#+#+   +#+            ;
 ;    Created: 2019/12/13 05:23:57 by sdunckel          #+#    #+#              ;
-;    Updated: 2019/12/17 10:25:46 by sdunckel         ###   ########.fr        ;
+;    Updated: 2020/01/13 11:20:34 by sdunckel         ###   ########.fr        ;
 ;                                                                              ;
 ; **************************************************************************** ;
 
@@ -27,6 +27,6 @@ _ft_list_push_front:
 	mov 	[rax], rsi		; move rsi (arg2) in arg1 = new->data = *new
 	mov		rcx, [rdi]		; *begin in rcx
 	mov		[rax + 8], rcx	; move *begin in new->next
-	mov		[rdi], rax
+	mov		[rdi], rax		; put the malloc list on front
 end:
 	ret

@@ -6,7 +6,7 @@
 ;    By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+         ;
 ;                                                 +#+#+#+#+#+   +#+            ;
 ;    Created: 2019/12/13 05:25:07 by sdunckel          #+#    #+#              ;
-;    Updated: 2019/12/17 10:25:39 by sdunckel         ###   ########.fr        ;
+;    Updated: 2020/01/06 12:50:12 by sdunckel         ###   ########.fr        ;
 ;                                                                              ;
 ; **************************************************************************** ;
 
@@ -15,14 +15,12 @@ section .text
 
 ; int	ft_list_size(t_list *begin_list);
 _ft_list_size:
-	push	rdi
-	xor		rax, rax
+	mov		rax, 0
 loop:
-	cmp 	rdi, 0
+	cmp 	rdi, 0	; if we reach end of list stop
 	je		end
-	inc		rax
-	mov		rdi, [rdi + 8]
+	inc		rax		; inc list count
+	mov		rdi, [rdi + 8]	; mov to next
 	jmp		loop
 end:
-	pop		rdi
 	ret

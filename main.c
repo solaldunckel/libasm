@@ -6,7 +6,7 @@
 /*   By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 11:59:40 by sdunckel          #+#    #+#             */
-/*   Updated: 2019/12/16 21:13:10 by sdunckel         ###   ########.fr       */
+/*   Updated: 2020/01/06 12:43:06 by sdunckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,8 +173,7 @@ int		main(void)
 	strcmp_test("on test tout ce qu'on peut mon gars", "   ");
 	strcmp_test("", "");
 	strcmp_test("beta", "");
-//	strcmp_test("\xfe", "\xfe\xff");
-	strcmp_test("\0", "\0");
+	strcmp_test("te\0", "\0");
 	strcmp_test("\xff", "\xff\xff");
 	strcmp_test("\xff", "\xff\xfe");
 	strcmp_test("\xfe", "\xfe\xff");

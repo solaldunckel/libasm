@@ -6,7 +6,7 @@
 /*   By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 11:59:40 by sdunckel          #+#    #+#             */
-/*   Updated: 2019/12/20 01:32:15 by sdunckel         ###   ########.fr       */
+/*   Updated: 2020/01/06 13:04:24 by sdunckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,6 +287,7 @@ int		main(void)
 	atoi_base_test("", "0123456789");
 	atoi_base_test("2147483647", "011");
 	atoi_base_test("18f", "0123456789abcdef");
+	atoi_base_test("18fb52", "0123456789");
 	atoi_base_test("18f", "");
 	atoi_base_test("", "");
 	atoi_base_test("45", "");

@@ -6,7 +6,7 @@
 ;    By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+         ;
 ;                                                 +#+#+#+#+#+   +#+            ;
 ;    Created: 2019/12/16 14:47:11 by sdunckel          #+#    #+#              ;
-;    Updated: 2019/12/18 17:38:24 by sdunckel         ###   ########.fr        ;
+;    Updated: 2020/01/06 14:01:04 by sdunckel         ###   ########.fr        ;
 ;                                                                              ;
 ; **************************************************************************** ;
 
@@ -30,10 +30,10 @@ _ft_atoi_base:
 	mov		r12, rax	; r12 = strlen(base)
 	cmp		r12, 0
 	je		end
-	cmp		r12, 1
+	cmp		r12, 1		; if base len = 1 = invalid base
 	je		end
 	push	r11
-	call	check_base
+	call	check_base	; we check invalid char in base
 	pop		r11
 	cmp		rax, 0
 	je		end
@@ -42,17 +42,17 @@ _ft_atoi_base:
 	jmp		skip
 
 convert:
-	mov		bl, [r10]
+	mov		bl, [r10]	; char to convert
 	cmp		bl, 0
 	je		end
 	xor		r9, r9
 	push	r11
-	call	is_base
+	call	is_base		; rax is base index
 	pop		r11
 	cmp		rax, -1
 	je		end
-	imul	r14, r12
-	add		r14, rax
+	imul	r14, r12	; mul with base len
+	add		r14, rax	; add base index
 	inc		r10
 	jmp		convert
 
@@ -76,27 +76,25 @@ is_base_failure:
 ;;; check base (len <= 1 / same char 2 times / base with whitespace + or -)
 check_base:
 	mov		bl, [r11]
-	cmp		bl, 0
+	cmp		bl, 0				; means we checked the whole base
 	je		check_base_success
-	cmp		bl, 32
+	cmp		bl, 32				; check error for space + -
 	jle		check_base_error
 	cmp		bl, 43
 	je		check_base_error
 	cmp		bl, 45
 	je		check_base_error
-	cmp		bl, 127
-	jg		check_base_error
 	push	r11
 	inc		r11
 	xor		r9, r9
-	call	is_base
+	call	is_base				; we check if the char is not already in the base
 	pop		r11
 	cmp		rax, -1
 	jne		check_base_error
 	inc		r11
-	jmp		check_base
+	jmp		check_base			; loop
 check_base_error:
-	xor		rax, rax
+	mov		rax, 0
 	ret
 check_base_success:
 	mov		rax, 1
@@ -105,7 +103,7 @@ check_base_success:
 ;;; skip spaces
 skip:
 	mov		bl, [r10]
-	cmp		bl, 9
+	cmp		bl, 9		; skip all spaces
 	je		inc_skip
 	cmp		bl, 10
 	je		inc_skip
@@ -124,7 +122,7 @@ inc_skip:
 
 ;;; check + and -
 sign:
-	mov		bl, [r10]
+	mov		bl, [r10]	; skip signs and multiply by -1 for each -
 	cmp		bl, 43
 	je		inc_sign
 	cmp		bl, 45

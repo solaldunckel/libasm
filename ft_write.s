@@ -6,7 +6,7 @@
 ;    By: sdunckel <sdunckel@student.42.fr>          +#+  +:+       +#+         ;
 ;                                                 +#+#+#+#+#+   +#+            ;
 ;    Created: 2019/12/13 05:24:56 by sdunckel          #+#    #+#              ;
-;    Updated: 2019/12/17 10:22:53 by sdunckel         ###   ########.fr        ;
+;    Updated: 2020/01/06 12:41:30 by sdunckel         ###   ########.fr        ;
 ;                                                                              ;
 ; **************************************************************************** ;
 
@@ -17,4 +17,7 @@ section .text
 _ft_write:
 	mov		rax, 0x2000004	; store write syscall : 0x200000 + UNIX syscall #
 	syscall					; call it
+	jc		error
 	ret						; return
+error:
+	mov		rax, -1
